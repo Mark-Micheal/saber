@@ -14,7 +14,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        return Reservation::getAllReservations();
     }
 
     /**
@@ -35,7 +35,7 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Reservation::addReservation($request);
     }
 
     /**
@@ -46,7 +46,7 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        //
+        return Reservation::showReservation($reservation);
     }
 
     /**

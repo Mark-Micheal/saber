@@ -18,7 +18,7 @@ class CreateRoomsTable extends Migration
             $table->enum('building',['B','C','D']);
             $table->enum('floor',['1','2','3']);
             $table->integer('number');
-            $table->timestamps();
+            //$table->timestamps();
         });
     }
 
