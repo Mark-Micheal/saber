@@ -18,7 +18,7 @@ Route::post('/login','PassportController@login');
 Route::post('/logout','PassportController@logout');
 
 Route::middleware('auth:api')->group(function () {
-    
+    Route::post('/logout','PassportController@logout');
 });
 
 Route::resource('/rooms','RoomController');

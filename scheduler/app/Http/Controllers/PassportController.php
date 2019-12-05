@@ -34,6 +34,7 @@ class PassportController extends Controller
                 'type' => $request->type,
             ]);
             $token = $user->createToken('TutsForWeb')->accessToken;
+            $user->save();
            DB::commit();
             return response()->json(['token' => $token], 201);
        } catch (\Exception $e) {
