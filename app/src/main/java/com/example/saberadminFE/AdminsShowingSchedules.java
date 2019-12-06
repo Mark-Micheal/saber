@@ -5,7 +5,7 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class test extends AppCompatActivity {
+public class AdminsShowingSchedules extends AppCompatActivity {
 Button n;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
