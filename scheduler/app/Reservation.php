@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class Reservation extends Model
 {
     protected $fillable = [
-        'room_id', 'student_id', 'day', 'slot','additional_info'
+        'room_id', 'student_id', 'day', 'slot','additional_info','tutorial'
     ];
 
     public static function getAllReservations()
@@ -26,28 +26,56 @@ class Reservation extends Model
 
     public static function addReservation(Request $request)
     {
-        $room_id = $request->input('room_id');
-        $student_id = $request->input('student_id');
+        // Getting Room id from room location
+        $room_building = $request->input('building');
+        $room_floor = $request->input('floor');
+        $room_number = $request->input('number');
+        $room_id = DB::table('rooms')->select('id')->where([
+            ['rooms.building','=',$room_building],
+            ['rooms.floor','=',$room_floor],
+            ['rooms.number','=',$room_number],
+        ])->get()->first()->id;
+
+        // Getting id of logged in user
+        $student_id = auth()->user()->id;
+        
+        // Getting reservation data
         $day = $request->input('day');
         $slot = $request->input('slot');
         $additional_info = $request->input('additional_info');
 
-        // Before adding, check that there is no reservation with the given room_id, date, and slot
-        //try{
-            DB::beginTransaction();
-    //['room_id' => $room_id, 'student_id' => $student_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]
-            $reservation = Reservation::create(['room_id' => $room_id, 'student_id' => $student_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]);
-            $reservation->save();
-            DB::commit();
-            return response()->json($reservation, 200);
-        //}
-        // catch (\Exception $e) {
-        //     DB::rollback();
-        // }
+        // Before adding, check that there is no reservation with the given room_id, date, and slot       
+        $taken_reservation = DB::table('reservations')->select('*')->where([
+            ['reservations.day','=',$day],
+            ['reservations.room_id','=',$room_id],
+            ['reservations.slot','=',$slot],
+        ])->get();
 
-        // $reservation = DB::table('reservations')->insertOrIgnore([
-        //     ['room_id' => $room_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]
-        // ]); // used to do many insertions in DB
+        if($taken_reservation->count() > 0) {
+            return response()->json(['data'=>'This slot is already reserved'], 400);;
+        }
+        else { 
+            if(auth()->user()->type == 'Student') // whether it is a tutorial or reservable slot
+                $tutorial = 0;
+            else
+                $tutorial = 1;
+
+            try {
+                DB::beginTransaction();
+                $reservation = Reservation::create(['room_id' => $room_id, 'student_id' => $student_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info, 'tutorial' => $tutorial]);
+                $reservation->save();
+                DB::commit();
+                return response()->json($reservation, 200);
+            }
+            catch (\Exception $e) {
+                DB::rollback();
+            }
+    
+            // $reservation = DB::table('reservations')->insertOrIgnore([
+            //     ['room_id' => $room_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]
+            // ]); // used to do many insertions in DB 
+        }
+        
        
     }
 
