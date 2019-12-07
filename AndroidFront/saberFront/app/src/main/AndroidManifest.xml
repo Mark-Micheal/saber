@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".landingAct"></activity>
+        <activity android:name=".SelectRoom"></activity>
+        <activity android:name=".AdminAfterLogin" />
+        <activity android:name=".landingAct" />
         <activity android:name=".reservationActivity" />
         <activity android:name=".registration" />
         <activity android:name=".MainActivity">

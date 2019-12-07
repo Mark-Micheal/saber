@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">saberFront</string>
+
+    <string-array name="building_array">
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+
+    </string-array>
+
+    <string-array name="floor_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+
+    </string-array>
+
+    <string-array name="room_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+
+    </string-array>
+
+    <string-array name="days_array">
+        <item>Saturday</item>
+        <item>Sunday</item>
+        <item>Monday</item>
+        <item>Tuesday</item>
+        <item>Wednesday</item>
+        <item>Thursday</item>
+
+
+    </string-array>
+    <string name="snackmsg">
+        <item>Changes saved</item>
+    </string>
 </resources>
