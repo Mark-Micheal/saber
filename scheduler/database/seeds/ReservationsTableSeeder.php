@@ -19,9 +19,12 @@ class ReservationsTableSeeder extends Seeder
         DB::table('reservations')->insert([
             'room_id' => $room_id,
             'student_id' => $student_id,
-            'day' => now(),
+            'day' => 'Monday', // now()->format( 'l' )
             'slot' => '2nd',
-            'additional_info'=>'This is a very first reservation',
+            'additional_info'=> 'This is a very first reservation',
+            'tutorial'=> true,
+            'created_at'=> now(),
+            'updated_at'=> now(),
         ]);
     }
 }

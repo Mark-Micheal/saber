@@ -17,9 +17,10 @@ class CreateReservationsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('room_id');
             $table->unsignedBigInteger('student_id');
-            $table->date('day');
+            $table->Enum('day',['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday']);
             $table->enum('slot',['1st','2nd','3rd','4th','5th','After Hours']);
             $table->text('additional_info');
+            $table->boolean('tutorial');
             $table->timestamps();
 
             //$table->primary(['room_id','day','slot']);
