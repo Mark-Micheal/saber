@@ -27,9 +27,9 @@ class Reservation extends Model
     public static function addReservation(Request $request)
     {
         // Getting Room id from room location
-        $room_building = $request->input('building');
-        $room_floor = $request->input('floor');
-        $room_number = $request->input('number');
+        $room_building = $request->params('building');
+        $room_floor = $request->params('floor');
+        $room_number = $request->params('number');
         $room_id = DB::table('rooms')->select('id')->where([
             ['rooms.building','=',$room_building],
             ['rooms.floor','=',$room_floor],
@@ -75,8 +75,52 @@ class Reservation extends Model
             //     ['room_id' => $room_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]
             // ]); // used to do many insertions in DB 
         }
+          
+    }
+
+    public static function myReservations()
+    {
+        $student_id = auth()->user()->id;
+        try {
+            DB::beginTransaction();
+            $reservations = DB::table('reservations')->select('*')->where('reservations.student_id','=',$student_id);
+            return $reservations->get();
+            DB::commit();
+            return response()->json($reservations, 200);
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+        }
+    }
+
+    public static function dayReservations(Request $request)
+    {
+        $room_building = $request->input('building');
+        $room_floor = $request->input('floor');
+        $room_number = $request->input('number');
         
-       
+        $room_id = DB::table('rooms')->select('id')->where([
+            ['rooms.building','=',$room_building],
+            ['rooms.floor','=',$room_floor],
+            ['rooms.number','=',$room_number],
+        ])->get();
+
+        return $room_id;
+
+        $day = $request->input('day');
+
+        try {
+            DB::beginTransaction();
+            $reservations =  DB::table('reservations')->select('*')->where([
+                ['reservations.room_id','=',$room_id],
+                ['reservations.day','=',$day],
+            ])->get();
+            DB::commit();
+            return response()->json($reservations, 200);
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
 }

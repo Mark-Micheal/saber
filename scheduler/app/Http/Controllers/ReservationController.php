@@ -82,4 +82,14 @@ class ReservationController extends Controller
     {
         //
     }
+    
+    public function myRes()
+    {
+        return Reservation::myReservations();
+    }
+
+    public function dayRes(Request $request)
+    {
+        return Reservation::dayReservations($request);
+    }
 }
