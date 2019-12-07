@@ -75,8 +75,22 @@ class Reservation extends Model
             //     ['room_id' => $room_id, 'day' => $day, 'slot' => $slot, 'additional_info' => $additional_info]
             // ]); // used to do many insertions in DB 
         }
-        
-       
+          
+    }
+
+    public static function myReservations()
+    {
+        $student_id = auth()->user()->id;
+        try {
+            DB::beginTransaction();
+            $reservations = DB::table('reservations')->select('*')->where('reservations.student_id','=',$student_id);
+            return $reservations->get();
+            DB::commit();
+            return response()->json($reservations, 200);
+        }
+        catch (\Exception $e) {
+            DB::rollback();
+        }
     }
 
 }

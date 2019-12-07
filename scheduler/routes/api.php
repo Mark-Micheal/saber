@@ -23,6 +23,7 @@ Route::post('/logout','PassportController@logout');
 Route::middleware('auth:api')->group(function () {
     Route::post('/logout','PassportController@logout');
     Route::resource('/reservations','ReservationController');
+    Route::get('/myReservations','ReservationController@myRes');
 });
 
 Route::resource('/rooms','RoomController');
