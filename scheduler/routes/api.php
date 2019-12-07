@@ -24,8 +24,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout','PassportController@logout');
     Route::resource('/reservations','ReservationController');
     Route::get('/myReservations','ReservationController@myRes');
+    
 });
 
+// Route::get('/dayReservations','ReservationController@dayRes');
 Route::resource('/rooms','RoomController');
 
 
