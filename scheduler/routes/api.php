@@ -27,7 +27,7 @@ Route::middleware('auth:api')->group(function () {
     
 });
 
-// Route::get('/dayReservations','ReservationController@dayRes');
+ Route::get('/dayReservations','ReservationController@dayRes');
 Route::resource('/rooms','RoomController');
 
 

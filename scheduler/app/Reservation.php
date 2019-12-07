@@ -103,12 +103,9 @@ class Reservation extends Model
             ['rooms.building','=',$room_building],
             ['rooms.floor','=',$room_floor],
             ['rooms.number','=',$room_number],
-        ])->get();
-
-        return $room_id;
+        ])->get()->first()->id;
 
         $day = $request->input('day');
-
         try {
             DB::beginTransaction();
             $reservations =  DB::table('reservations')->select('*')->where([
