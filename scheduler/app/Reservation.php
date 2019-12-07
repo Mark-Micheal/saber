@@ -27,9 +27,9 @@ class Reservation extends Model
     public static function addReservation(Request $request)
     {
         // Getting Room id from room location
-        $room_building = $request->params('building');
-        $room_floor = $request->params('floor');
-        $room_number = $request->params('number');
+        $room_building = $request->input('building');
+        $room_floor = $request->input('floor');
+        $room_number = $request->input('number');
         $room_id = DB::table('rooms')->select('id')->where([
             ['rooms.building','=',$room_building],
             ['rooms.floor','=',$room_floor],
