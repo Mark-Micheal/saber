@@ -13,7 +13,17 @@ class RoomsTableSeeder extends Seeder
     {
         DB::table('rooms')->insert([
             'building' => 'B',
-            'Floor' => '1',
+            'floor' => '1',
+            'number' => '1',
+        ]);
+        DB::table('rooms')->insert([
+            'building' => 'C',
+            'floor' => '1',
+            'number' => '1',
+        ]);
+        DB::table('rooms')->insert([
+            'building' => 'D',
+            'floor' => '1',
             'number' => '1',
         ]);
     }
