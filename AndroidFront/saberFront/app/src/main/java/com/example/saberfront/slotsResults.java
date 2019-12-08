@@ -58,12 +58,12 @@ public class slotsResults extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        try {
-
-
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
+//                        try {
+//
+//
+//                        } catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
 
                     }
                 }, new Response.ErrorListener() {

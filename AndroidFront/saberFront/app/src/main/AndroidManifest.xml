@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".slotsResults"></activity>
+        <activity android:name=".DisplaySchedule"></activity>
+        <activity android:name=".slotsResults" />
         <activity android:name=".viewMyRes" />
         <activity android:name=".SelectRoom" />
         <activity android:name=".AdminAfterLogin" />

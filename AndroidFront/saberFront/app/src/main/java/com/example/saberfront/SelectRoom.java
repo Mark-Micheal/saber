@@ -20,6 +20,7 @@ public class SelectRoom extends AppCompatActivity {
     String buildingNr;
     String floorNr;
     String day;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,9 @@ public class SelectRoom extends AppCompatActivity {
         floorNrSpinner = findViewById(R.id.floorSpinner);
         daySpinner = findViewById(R.id.daySpinner);
         showSchedules  = findViewById(R.id.nextbutton);
+
+        Intent myIntent = getIntent();
+        token = myIntent.getStringExtra("token");
 
         ArrayAdapter<CharSequence> adapter_building = ArrayAdapter.createFromResource(this,
                 R.array.building_array, android.R.layout.simple_spinner_item);
@@ -47,31 +51,41 @@ public class SelectRoom extends AppCompatActivity {
         adapter_floor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         floorNrSpinner.setAdapter(adapter_floor);
 
-        ArrayAdapter<CharSequence> adapter_day = ArrayAdapter.createFromResource(this,
+//        ArrayAdapter<CharSequence> adapter_day = ArrayAdapter.createFromResource(this,
+//                R.array.days_array, android.R.layout.simple_spinner_item);
+//        adapter_day.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        daySpinner.setAdapter(adapter_day);
+        ArrayAdapter<CharSequence> adapter_day2 = ArrayAdapter.createFromResource(this,
                 R.array.days_array, android.R.layout.simple_spinner_item);
-        adapter_floor.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daySpinner.setAdapter(adapter_day);
+        adapter_day2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        daySpinner.setAdapter(adapter_day2);
 
-        roomNr = roomNrSpinner.getSelectedItem().toString();
-        floorNr = floorNrSpinner.getSelectedItem().toString();
-        buildingNr = buildingNrSpinner.getSelectedItem().toString();
-        day= daySpinner.getSelectedItem().toString();
+
 
         showSchedules.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                roomNr = roomNrSpinner.getSelectedItem().toString();
+                floorNr = floorNrSpinner.getSelectedItem().toString();
+                buildingNr = buildingNrSpinner.getSelectedItem().toString();
+                day= daySpinner.getSelectedItem().toString();
+                System.out.println("DAYY"+day);
                 Log.d(roomNr+"","roomnr");
                 Log.d(floorNr+"","floor");
                 Log.d(buildingNr+"","build");
+                System.out.println("MY FLOOR IS:"+floorNr);
+
                 // Code here executes on main thread after user presses button
-                //Intent showingSchedules = new Intent(SelectRoom.this, DisplayRes.class);
+                Intent showingSchedules = new Intent(SelectRoom.this, DisplaySchedule.class);
 
-//                showingSchedules.putExtra("roomNumberSelected",roomNr);
-//                showingSchedules.putExtra("floorNumberSelected",floorNr);
-//                showingSchedules.putExtra("buildingNumberSelected",buildingNr);
-//                showingSchedules.putExtra("daySelected",day);
+                showingSchedules.putExtra("roomNumberSelected",roomNr);
+                showingSchedules.putExtra("floorNumberSelected",floorNr);
+                showingSchedules.putExtra("buildingNumberSelected",buildingNr);
+                showingSchedules.putExtra("daySelected",day);
+                showingSchedules.putExtra("token",token);
 
 
-                //startActivity(showingSchedules);
+
+                startActivity(showingSchedules);
 
 
             }
