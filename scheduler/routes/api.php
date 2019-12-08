@@ -24,6 +24,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout','PassportController@logout');
     Route::resource('/reservations','ReservationController');
     Route::get('/myReservations','ReservationController@myRes');
+    Route::get('/freeReservations','ReservationController@freeRes');
+    Route::get('/clearReservations','ReservationController@clearRes');
     
 });
 

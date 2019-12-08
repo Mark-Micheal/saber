@@ -11,7 +11,7 @@ class ReservationsTableSeeder extends Seeder
      */
     public function run()
     {
-        $student_id = DB::table('users')->select('id')->where('users.name','=','Lucky')->get()->first()->id;
+        $student_id = DB::table('users')->select('id')->where('users.name','=','Adminy')->get()->first()->id;
         $building_id = DB::table('rooms')->select('id')->where('rooms.building','=','B');
         $floor_id = DB::table('rooms')->select('id')->where('rooms.floor','=','1');
         $room_id = DB::table('rooms')->select('id')->where('rooms.number','=','1')->union($building_id)->union($floor_id)->get()->first()->id;
