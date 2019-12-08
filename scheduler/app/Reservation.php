@@ -84,7 +84,9 @@ class Reservation extends Model
         try {
             DB::beginTransaction();
             $reservations = DB::table('reservations')->select('*')->where('reservations.student_id','=',$student_id);
-            return $reservations->get();
+            $reservations = DB::table('rooms')->joinSub($reservations, 'reservations', function ($join){
+                $join->on('reservations.room_id','=','rooms.id');
+            })->get();
             DB::commit();
             return response()->json($reservations, 200);
         }
@@ -118,6 +120,39 @@ class Reservation extends Model
         catch (\Exception $e) {
             DB::rollback();
         }
+    }
+
+    public static function freeReservations(Request $request)
+    {
+        $day = $request->input('day');
+        $idXslots = DB::table('slots')->crossJoin('rooms')->select('rooms.id as room_id','slot');
+        $reservation = DB::table('reservations')->select('reservations.room_id','slot')->where('reservations.day','=',$day)->get();
+       
+        $free = DB::select(DB::raw("SELECT *
+                                    FROM 
+                                    (SELECT rooms.id AS room_id, slot
+                                    FROM rooms CROSS JOIN slots
+                                    EXCEPT 
+                                    SELECT reservations.room_id, slot
+                                    FROM reservations
+                                    WHERE reservations.day = :day) as free
+                                    JOIN rooms 
+                                    ON rooms.id = free.room_id
+                                    "), array(
+                                        'day' => $day,
+                                    ));
+    
+        
+        return response()->json($free, 200);
+
+        
+    }
+
+    public static function clearReservations(Request $request)
+    {
+        $day = $request->input('day');
+        $deleted = Reservation::where('day',$day)->delete();
+        return response()->json($deleted, 200);
     }
 
 }
