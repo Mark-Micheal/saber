@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         params.put("email",email.getText().toString());
         params.put("password",password.getText().toString());
         JSONObject myparams = new JSONObject(params);
-        Log.d(myparams.toString(),"my parameters");
         JsonObjectRequest jsonObjReq =new JsonObjectRequest(Request.Method.POST,
                 "https://saberapp.herokuapp.com/api/login", myparams,
                 new Response.Listener<JSONObject>() {
