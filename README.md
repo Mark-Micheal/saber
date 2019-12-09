@@ -56,6 +56,10 @@ It's that easy !
 All the required dependencies are present in composer.json under the scheduler folder.
 It is automatically installed by the Dockerfile.
 
+## Backing Services
+* Database: PostegresSQL
+* API: apilayer.net
+
 ## Deployment
 
 The app is deployement ready.
