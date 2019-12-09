@@ -35,7 +35,7 @@ Run the application on an emulator or an android device.
 It's that easy !
 
 ## Dependencies
-All the required dependencies are present in composer.json.
+All the required dependencies are present in composer.json under the scheduler folder.
 It is automatically installed by the Dockerfile.
 
 ## Deployment
