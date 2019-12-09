@@ -1,11 +1,15 @@
 package com.example.saberfront;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -31,39 +35,66 @@ import java.util.Map;
 
 public class slotsResults extends AppCompatActivity {
 
-    String token;
+    static String token;
+    public static String day;
 
     ListView ls;
-    private RequestQueue mQ;
+
+    JSONArray contents;
+    public static JSONObject chosen;
+    private static RequestQueue mQ;
     public ArrayList<String> content = new ArrayList<String>();
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_slots_results);
         token = getIntent().getStringExtra("token");
+        day =getIntent().getStringExtra("day");
         ls = (ListView) findViewById(R.id.listView2);
         mQ = Volley.newRequestQueue(this);
-        getFree();
+        try {
+            getFree();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
+        ls.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    chosen = contents.getJSONObject(position);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog d = new dialog();
+                d.show(getSupportFragmentManager(),"nothing");
+            }
+        });
+    }
 
-        Map<String, String> params = new HashMap<String, String>();
-//        params.put("email",email.getText().toString());
-//        params.put("password",password.getText().toString());
-        JSONObject myparams = new JSONObject(params);
+
+    public static void reserve(){
+
+        JSONObject params = new JSONObject();
+        try {
+            params.put("slot",chosen.getString("slot"));
+            params.put("building",chosen.getString("building"));
+            params.put("floor",chosen.getString("floor"));
+            params.put("number",chosen.getString("number"));
+            params.put("day",day);
+            params.put("additional_info","done");
+        } catch (JSONException e) {
+            //e.printStackTrace();
+        }
+        System.out.println(params.toString());
         JsonObjectRequest jsonObjReq =new JsonObjectRequest(Request.Method.POST,
-                "https://saberapp.herokuapp.com/api/login", myparams,
+                "https://saberapp.herokuapp.com/api/reservations", params,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-//                        try {
-//
-//
-//                        } catch (JSONException e){
-//                            e.printStackTrace();
-//                        }
 
                     }
                 }, new Response.ErrorListener() {
@@ -76,23 +107,27 @@ public class slotsResults extends AppCompatActivity {
                 HashMap headers = new HashMap();
                 headers.put("Content-Type","application/json");
                 headers.put("Accept","application/json");
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
         };
         mQ.add(jsonObjReq);
+
     }
 
-    void getFree(){
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    void getFree() throws JSONException {
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET,
-                "https://saberapp.herokuapp.com/api/myReservations", null,
+                "https://saberapp.herokuapp.com/api/freeReservations?day="+day,null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            contents=response;
                             for (int i = 0; i < response.length(); i++) {
                                 String res = "";
                                 JSONObject element = response.getJSONObject(i);
-                                res += element.getString("day") + " , " + element.getString("slot");
+                                res += "Building : "+element.getString("building")+" , Floor :"+element.getString("floor")+" , Room :"+element.getString("number") + " , " + element.getString("slot");
                                 content.add(res);
                             }
                             ArrayAdapter<String> aa = new ArrayAdapter<String>(slotsResults.this, android.R.layout.simple_list_item_1, content);
