@@ -1,6 +1,6 @@
 # Saber
 
-A smart reservation system to help students find convenient location to work on their projects
+A smart reservation system to help students find convenient location to work on their projects.
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -21,6 +21,7 @@ git clone https://github.com/Mark-Micheal/saber.git
 Then replace the env.example with .env and write your database credentials that you will use.
 
 Use the template found in env.example.
+Replace it with your Application Name, Application environment, and Database credentials.
 ```
 APP_NAME=Laravel
 APP_ENV=local
