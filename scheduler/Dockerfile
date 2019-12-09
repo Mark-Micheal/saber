@@ -5,9 +5,10 @@ RUN apt-get install -y \
     zip \
     curl \
     openssl \
-    unzip 
+    unzip \
+    libpq-dev
 
-RUN docker-php-ext-install pdo_mysql mysqli pdo_pgsql
+RUN docker-php-ext-install pdo pgsql pdo_pgsql
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
