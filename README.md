@@ -1,4 +1,4 @@
-# saber
+# Saber
 
 A smart reservation system to help students find convenient location to work on their projects
 
@@ -18,17 +18,34 @@ First clone the repo
 git clone https://github.com/Mark-Micheal/saber.git
 ```
 
-Then replace the env.example with .env and write your database credentials that you will use
+Then replace the env.example with .env and write your database credentials that you will use.
 
-Then run docker comand to get the app running
+Use the template found in env.example.
+```
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=pgsql
+DB_HOST=postgres://user:password@host:5432/database
+DB_PORT=5432
+DB_DATABASE=database
+DB_USERNAME=user
+DB_PASSWORD=password
+```
+Then run docker comand to get the app running.
 ```docker
 docker-compose up --build
 ```
-visit `http://localhost:8100/` , you will see the laravel homepage.
+visit *[Saberapp](http://localhost:8100/) , you will see the laravel homepage.
 
 Launch the project interface using Android studio.
 
-Sync project with Gradle Files.
+Sync project with gradle files.
 
 Run the application on an emulator or an android device.
 
