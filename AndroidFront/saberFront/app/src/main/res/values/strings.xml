@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">saberFront</string>
+    <string name="app_name">Saber</string>
 
     <string-array name="building_array">
         <item>B</item>
