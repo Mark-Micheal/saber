@@ -56,7 +56,7 @@ public class viewMyRes extends AppCompatActivity {
                             for (int i = 0; i < response.length(); i++) {
                                 String res = "";
                                 JSONObject element = response.getJSONObject(i);
-                                res += element.getString("day") + " , " + element.getString("slot");
+                                res += "Building : "+element.getString("building")+" , Floor :"+element.getString("floor")+" , Room :"+element.getString("number")+" , "+element.getString("day") + " , " + element.getString("slot");
                                 content.add(res);
                             }
                             ArrayAdapter<String> aa = new ArrayAdapter<String>(viewMyRes.this, android.R.layout.simple_list_item_1, content);
