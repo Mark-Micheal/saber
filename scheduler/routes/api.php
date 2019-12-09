@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +12,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::GET('/test',function(){
+    return now()->format( 'l' );
 });
+
+Route::post('/register','PassportController@register');
+Route::post('/login','PassportController@login');
+Route::post('/logout','PassportController@logout');
+
+Route::middleware('auth:api')->group(function () {
+    Route::post('/logout','PassportController@logout');
+    Route::resource('/reservations','ReservationController');
+    Route::get('/myReservations','ReservationController@myRes');
+    Route::get('/freeReservations','ReservationController@freeRes');
+    Route::get('/clearReservations','ReservationController@clearRes');
+    
+});
+
+ Route::get('/dayReservations','ReservationController@dayRes');
+Route::resource('/rooms','RoomController');
+
+

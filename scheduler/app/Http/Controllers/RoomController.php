@@ -14,7 +14,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
+       return Room::getAllRooms();
     }
 
     /**
@@ -46,7 +46,7 @@ class RoomController extends Controller
      */
     public function show(Room $room)
     {
-        //
+        return Room::showRoom($room);
     }
 
     /**
