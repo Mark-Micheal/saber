@@ -39,6 +39,7 @@ public class DisplaySchedule extends AppCompatActivity {
     Button b1,b2,b3,b4,b5,b6;
     View contextView;
     Snackbar mySnackbar;
+    Snackbar cant;
     String day, roomNr, floorNr, buildingNr, room;
     String URL;
     String []slotChanged = new String[6];
@@ -60,6 +61,7 @@ public class DisplaySchedule extends AppCompatActivity {
 
         contextView= findViewById(R.id.button1);
         mySnackbar =  Snackbar.make(contextView, R.string.snackmsg, Snackbar.LENGTH_SHORT);
+        cant =  Snackbar.make(contextView, R.string.snackmsg2, Snackbar.LENGTH_SHORT);
 
         first = findViewById(R.id.firstText);
         second = findViewById(R.id.secondText);
@@ -84,7 +86,7 @@ public class DisplaySchedule extends AppCompatActivity {
         token = myIntent.getStringExtra("token");
         System.out.println("room: "+ roomNr +"build "+buildingNr + "floor "+floorNr+"day "+ day);
         if(Integer.parseInt(roomNr) <10) {
-            title.setText("Schedule of Room: " + buildingNr + floorNr + "0"+roomNr+" on "+day+", you can add tutorials to free slots or delete existing reservations");
+            title.setText("Schedule of Room: " + buildingNr + floorNr + "0"+roomNr+" on "+day+", you can add tutorials to free slots");
         }
         else{
             title.setText("Schedule of Room: " + buildingNr + floorNr +roomNr +"on "+day);
@@ -186,14 +188,6 @@ public class DisplaySchedule extends AppCompatActivity {
             }});
 
 
-        //volley to find from api
-
-        // afterhours.setText(afterhoursSlot);
-
-
-
-
-
 
 
     }
@@ -228,16 +222,27 @@ public class DisplaySchedule extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        if(response.has("data")){
+                            try {
+                                if(response.getString("data").equals("This slot is already reserved")){
+                                    cant.show();
+                                    switch(sourceClick){
+                                        case(1):b1.setEnabled(false);break;
+                                        case(2):b2.setEnabled(false);break;
+                                        case(3):b3.setEnabled(false);break;
+                                        case(4):b4.setEnabled(false);break;
+                                        case(5):b5.setEnabled(false);break;
+                                        case(6):b6.setEnabled(false);break;
+                                    }
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                cant.show();
+                            }
+                        }
                         System.out.println(response.toString());
                         mySnackbar.show();
-                        switch(sourceClick){
-                            case(1):b1.setText("DELETE");break;
-                            case(2):b2.setText("DELETE");break;
-                            case(3):b3.setText("DELETE");break;
-                            case(4):b4.setText("DELETE");break;
-                            case(5):b5.setText("DELETE");break;
-                            case(6):b6.setText("DELETE");break;
-                        }
+
 
 
                     }
@@ -291,29 +296,33 @@ public class DisplaySchedule extends AppCompatActivity {
                                 }
                                 if(slot_num.equals("1st")){
                                     firstSlot = slot;
-                                    b1.setText("DELETE");
+                                    b1.setEnabled(false);
                                 }
                                 if(slot_num.equals("2nd")){
                                     secondSlot = slot;
                                     System.out.println("SECOND");
-                                    b2.setText("DELETE");
+                                    b2.setEnabled(false);
+
 
                                 }
                                 if(slot_num.equals("3rd")){
                                     thirdSlot = slot;
-                                    b3.setText("DELETE");
+                                    b3.setEnabled(false);
                                 }
                                 if(slot_num.equals("4th")){
                                     fourthSlot = slot;
-                                    b4.setText("DELETE");
+                                    b4.setEnabled(false);
+
                                 }
                                 if(slot_num.equals("5th")){
                                     fifthSlot = slot;
-                                    b5.setText("DELETE");
+                                    b5.setEnabled(false);
+
                                 }
                                 if(slot_num.equals("After Hours")) {
                                     afterhoursSlot = slot;
-                                    b6.setText("DELETE");
+                                    b6.setEnabled(false);
+
                                 }
 
 

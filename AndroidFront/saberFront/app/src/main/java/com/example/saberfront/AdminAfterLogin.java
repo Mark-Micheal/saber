@@ -33,5 +33,17 @@ public class AdminAfterLogin extends AppCompatActivity {
 
             }
         });
+
+        del.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                //startActivity(new Intent(AdminAfterLogin.this, SelectRoom.class));
+                Intent dataDeletionActivity = new Intent (AdminAfterLogin.this, ClearingReservationsAct.class);
+                dataDeletionActivity.putExtra("token",token);
+
+                startActivity(dataDeletionActivity);
+
+            }
+        });
     }
 }

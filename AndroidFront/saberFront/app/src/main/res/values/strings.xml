@@ -33,4 +33,8 @@
     <string name="snackmsg">
         <item>Changes saved</item>
     </string>
+
+    <string name="snackmsg2">
+        <item>you cant make this change</item>
+    </string>
 </resources>
