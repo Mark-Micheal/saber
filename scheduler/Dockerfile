@@ -29,8 +29,9 @@ RUN composer dump-autoload --optimize
 #&& composer run-script post-install-cmd
 
 RUN php artisan key:generate
-#RUN php artisan passport:install
-#RUN php artisan migrate
+RUN php artisan migrate
+RUN php artisan passport:install
+
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8100"]
 EXPOSE 8100
