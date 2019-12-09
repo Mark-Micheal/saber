@@ -41,7 +41,7 @@ Then run docker comand to get the app running.
 ```docker
 docker-compose up --build
 ```
-visit *[Saberapp](http://localhost:8100/) , you will see the laravel homepage.
+visit (http://localhost:8100/) , you will see the laravel homepage.
 
 Launch the project interface using Android studio.
 
@@ -58,5 +58,5 @@ It is automatically installed by the Dockerfile.
 ## Deployment
 
 The app is deployement ready.
-It is currently deployed at `http://saberapp.herokuapp.com`.
+It is currently deployed at (http://saberapp.herokuapp.com).
 
