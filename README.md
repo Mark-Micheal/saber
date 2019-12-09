@@ -26,6 +26,12 @@ docker-compose up --build
 ```
 visit `http://localhost:8100/` , you will see the laravel homepage.
 
+Open front end part of the project using Android studio.
+
+Sync project with Gradle Files.
+
+Run the application on an emulator or an android device.
+
 It's that easy !
 
 ## Dependencies
