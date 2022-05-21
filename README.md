@@ -59,9 +59,3 @@ It is automatically installed by the Dockerfile.
 ## Backing Services
 * Database: PostegresSQL
 * API: apilayer.net
-
-## Deployment
-
-The app is deployement ready.
-It is currently deployed at (http://saberapp.herokuapp.com).
-
